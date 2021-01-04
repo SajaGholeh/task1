@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+
+                <div class="row">
+                  <div class="col">
+
+                    <h1>Products</h1>
+                    <hr>
+
+                    <form action="/insertproduct/" method="POST">
+
+                      <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter a product name">
+                      </div>
+              <br>
+                      <div class="form-group">
+                        <label>Product Quantity</label>
+                        <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Enter quantity">
+                      </div>
+              <br>
+
+              <button type="submit" class="btn btn-primary">Add New Product</button>
+            </form>
+
+              <br>
+<hr>
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Quantity</th>
+                        <th>Creation Datetime</th>
+                        <th>Action</th>
+                    </tr>
+                   {% for row in data %}
+                    <tr>
+                        <td>{{row.product_name}}</td>
+                        <td>{{row.quantity}}</td>
+                        <td>{{row.creation_datetime}}</td>
+                        <td>
+                            <a href="/updateproduct/{{row.id}}" data-toggle="modal" data-target="#updateproduct{{row.product_id}}">Update</a>
+                        </td>
+                    </tr>
+
+
+     <div id="updateproduct{{row.product_id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <div class="modal-content">
+       <div class="modal-header"><h4 class="modal-title">Update Product</h4></div>
+        <div class="modal-body">
+        <form action="/updateproduct/" method="POST">
+         <div class="form-group">
+          <label>Product Name</label>
+          <input type="hidden"  name="product_id" value="{{row.product_id}}">
+          <input type="text" class="form-control" name="product_name" value="{{row.product_name}}">
+         </div>
+         <div class="form-group">
+          <label>Product Quantity</label>
+          <input type="text" class="form-control" name="quantity" value="{{row.quantity}}">
+         </div>
+         <div class="form-group">
+          <button class="btn btn-primary" type="submit">Update</button>
+         </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+     </div>
+     {% endfor %}
+    </table>
+   </div>
+
+ </div>
+</div>
+{% endblock %}

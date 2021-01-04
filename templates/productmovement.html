@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+
+                <div class="row">
+                  <div class="col">
+
+                    <h1>Products Movements</h1>
+                    <hr>
+
+                    <form action="/insertproductmovement/" method="POST">
+
+                      <div class="form-group">
+                        <label>Choose a Product</label>
+                        <select  class="form-control" name="product_id">
+                            {% for product in products %}
+                                <option value="{{product['product_id']}}" SELECTED>{{product['product_name']}}</option>"
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <br>
+
+
+                      <div class="form-group">
+                        <label>Choose a Location To</label>
+                        <select  class="form-control" name="location_id" >
+                          <option value="0000" SELECTED>Move Out</option>"
+
+                            {% for location in locations %}
+                                <option  value="{{location['location_id']}}" SELECTED>{{location['location_name']}}</option>"
+                            {% endfor %}
+
+                        </select>
+                      </div>
+                      <br>
+
+                      <div class="form-group">
+                        <label>Product Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity">
+                      </div>
+                      <br>
+
+
+
+              <button type="submit" class="btn btn-primary">Add New Movement</button>
+            </form>
+
+            <br>
+            <hr>
+              <table class="table table-hover table-striped">
+                  <tr>
+                      <th>Product Name</th>
+                      <th>Location Name</th>
+                      <th>Quantity</th>
+                  </tr>
+                 {% for row in data %}
+                  <tr>
+                      <td>{{row.product_name}}</td>
+                      <td>{{row.location_name}}</td>
+                      <td>{{row.quantity}}</td>
+
+                  </tr>
+
+
+                  {% endfor %}
+                 </table>
+                </div>
+
+              </div>
+             </div>
+             {% endblock %}
